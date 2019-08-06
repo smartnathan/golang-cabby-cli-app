@@ -89,9 +89,10 @@ func main() {
         time.Sleep(2 * time.Second)
         fmt.Println("Delivery Successfully completed.................100%")
 
+        count := 0
         for {
           tryPayment()
-          count := 0
+
           count++
           if count == 5 {
             fmt.Println("YOU WILL BE REPORTED TO THE POLICE IMMEDIATELY")
