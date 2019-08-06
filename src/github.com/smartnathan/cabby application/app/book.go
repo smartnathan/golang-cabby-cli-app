@@ -8,12 +8,14 @@ import (
   "time"
 )
 
-var amountPayable int
-var dropoffPrice int
+var amountPayable, dropoffPrice, amount int
 
 func main() {
   var reader = bufio.NewReader(os.Stdin)
-  fmt.Println("Welcome to Cabby Booking Platform")
+  fmt.Println("----------------------------------")
+  fmt.Print("|")
+  fmt.Print("WELCOME TO CABBY BOOKING PLATFORM")
+  fmt.Println("|")
   fmt.Println("----------------------------------")
   fmt.Println("Pickup and dropoff locations: ikono, ikot ekpene, uyo, essien udim, ibesikpo, eket, onna")
   fmt.Println("----------------------------------")
@@ -87,44 +89,39 @@ func main() {
         time.Sleep(2 * time.Second)
         fmt.Println("Delivery Successfully completed.................100%")
 
+        for {
+          tryPayment()
+          count := 0
+          count++
+          if count == 5 {
+            fmt.Println("YOU WILL BE REPORTED TO THE POLICE IMMEDIATELY")
+            time.Sleep(2 * time.Second)
+            fmt.Println("Sending notification to the nearest police station....90%")
+            time.Sleep(2 * time.Second)
+            fmt.Println("Police already on their way to your location")
+          } else if amount >= amountPayable {
+            break
+          }
+        }
+
+        if amount > amountPayable {
+          balance := amount - amountPayable
+          fmt.Printf("Thank your patronage, your balance is N%d\n", balance)
+        }
         //Get Customer's amount payable
-        fmt.Print("Enter amount for delivery?-> ")
-        var amount int
+        fmt.Print("We will appreciate if you give us a tip?-> ")
+        var amount uint16
         fmt.Scan(&amount)
 
-        if amount < amountPayable {
+        if int(amount) <= 0 {
+          fmt.Println("<<<<<<<<<<<<<<<<<<<You are a stingy fool>>>>>>>>>>>>>>>")
 
-          for i := 0; i <= 5; i++ {
-            tryPayment()
-            if i == 5 {
-              fmt.Println("YOU WILL BE REPORTED TO THE POLICE IMMEDIATELY")
-              time.Sleep(2 * time.Second)
-              fmt.Println("Sending notification to the nearest police station....90%")
-              time.Sleep(2 * time.Second)
-              fmt.Println("Police already on their way to your location")
-            }
-          }
+        } else if amount < uint16(amountPayable) && amount > 0 {
+          fmt.Println("<<<<<<<<<<<<<<<Thank you very much>>>>>>>>>>>>>>>")
 
         } else {
-          if amount > amountPayable {
-            balance := amount - amountPayable
-            fmt.Printf("Thank your patronage, your balance is N%d\n", balance)
-          }
-          //Get Customer's amount payable
-          fmt.Print("We will appreciate if you give us a tip?-> ")
-          var amount uint16
-          fmt.Scan(&amount)
+          fmt.Println("<<<<<<<<<<<<<<<<<gracias mucho>>>>>>>>>>>>>>>>")
 
-          if int(amount) <= 0 {
-            fmt.Println("You are a stingy fool")
-
-          } else if amount < uint16(amountPayable) && amount > 0 {
-            fmt.Println("Thank you very much")
-
-          } else {
-            fmt.Println("gracias mucho")
-
-          }
         }
 
       } else {
@@ -132,7 +129,7 @@ func main() {
       }
 
     } else {
-      fmt.Println("Bye, laters")
+      fmt.Println("<<<<<<<<<<<<<<<<<Bye, laters>>>>>>>>>>>>>>>")
 
     }
 
@@ -145,8 +142,7 @@ func main() {
 
 func tryPayment() {
   //Get Customer's amount payable
-  fmt.Print("Confirm amount for delivery?-> ")
-  var amount int
+  fmt.Print("Confirm amount for your delivery?-> ")
   fmt.Scan(&amount)
   if amount < amountPayable {
     fmt.Printf("Sorry! The amount is not correct, your cost of delivery is %d\n", amountPayable)
