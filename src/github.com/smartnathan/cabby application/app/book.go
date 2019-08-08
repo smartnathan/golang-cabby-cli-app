@@ -119,6 +119,7 @@ func getPickupAndDropoff() {
         fmt.Printf("%s is available for dropoff\n", dropoff)
         break
       } else {
+        fmt.Println("Sorry! Dropoff point is not available for now, try another.")
         continue
       }
 
@@ -149,12 +150,13 @@ func getPickupAndDropoff() {
       time.Sleep(2 * time.Second)
       fmt.Println("Processing delivery.................80%")
       time.Sleep(2 * time.Second)
-      fmt.Println("Delivery Successfully completed.................100%")
+      fmt.Println("Delivery successfully completed....100%")
     } else {
       fmt.Println("Sorry! We can not proceed with your request. Try again")
       os.Exit(2)
     }
   } else {
+    fmt.Println("Sorry! We don't accept such pickup point for now!")
     fmt.Println("<<<<<<<<<<<<<<<<<Bye, laters>>>>>>>>>>>>>>>")
     os.Exit(2)
   }
